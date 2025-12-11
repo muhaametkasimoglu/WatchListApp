@@ -1,0 +1,62 @@
+@model WatchlistApp.Models.Movie
+
+@{
+    ViewData["Title"] = "Kaydı Düzenle";
+}
+
+<div class="form-page-root">
+    <section class="form-page-intro">
+        <h1>Kayıt bilgilerini güncelle</h1>
+        <p>
+            Bu sayfadan film veya diziyle ilgili detayları güncelleyebilirsin.
+            Puanını değiştirebilir, tür ekleyebilir veya izlenme durumunu güncelleyebilirsin.
+        </p>
+        <p class="text-muted mb-0" style="font-size: 0.9rem;">
+            Değişiklikleri onaylamak için sağdaki formu kaydetmen yeterli.
+        </p>
+    </section>
+
+    <section class="form-page-card">
+        <form asp-action="Edit" method="post" novalidate>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Genre" class="form-label"></label>
+                <input asp-for="Genre" class="form-control" />
+                <span asp-validation-for="Genre" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ReleaseYear" class="form-label"></label>
+                <input asp-for="ReleaseYear" class="form-control" />
+                <span asp-validation-for="ReleaseYear" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Rating" class="form-label"></label>
+                <input asp-for="Rating" class="form-control" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-4">
+                <input asp-for="IsWatched" class="form-check-input" />
+                <label asp-for="IsWatched" class="form-check-label"></label>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">Geri dön</a>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

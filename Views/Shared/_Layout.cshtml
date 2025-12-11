@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WatchlistApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WatchlistApp.styles.css" asp-append-version="true" />
+</head>
+<body class="app-body">
+    <div class="app-shell">
+        <header>
+            <nav class="navbar navbar-expand-sm glass-navbar sticky-top">
+                <div class="container-xl">
+                    
+                    <a class="navbar-brand brand-mark" asp-area="" asp-controller="Movies" asp-action="Index">
+                        <span class="brand-dot"></span>
+                        <span class="brand-text">My Watchlist</span>
+                    </a>
+
+                    
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    
+                    <div class="collapse navbar-collapse" id="mainNav">
+                        <ul class="navbar-nav ms-auto align-items-center gap-2">
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-soft" asp-area="" asp-controller="Movies" asp-action="Index">
+                                    Watchlist
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-accent-nav" asp-area="" asp-controller="Movies" asp-action="Create">
+                                    + Yeni Kayıt
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main role="main" class="app-main py-4">
+            <div class="container-xl">
+                @RenderBody()
+            </div>
+        </main>
+
+        <footer class="app-footer border-top">
+            <div class="container-xl d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 py-3">
+                <div class="footer-left">
+                    <span class="footer-brand">My Watchlist</span>
+                    <span class="text-muted"> · @DateTime.Now.Year</span>
+                </div>
+                <div class="footer-links">
+                    <a asp-area="" asp-controller="Movies" asp-action="Index">Watchlist</a>
+                    <span>·</span>
+                    <a asp-area="" asp-controller="Movies" asp-action="Create">Yeni Kayıt</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

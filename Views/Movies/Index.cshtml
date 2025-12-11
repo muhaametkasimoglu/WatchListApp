@@ -1,0 +1,102 @@
+@model IEnumerable<WatchlistApp.Models.Movie>
+
+@{
+    ViewData["Title"] = "Watchlist";
+
+    var total = Model.Count();
+    var watched = Model.Count(m => m.IsWatched);
+    var toWatch = total - watched;
+}
+
+<div class="page-root">
+    
+    <section class="hero-panel mb-3">
+        <div>
+            <div class="hero-pill">
+                <span class="hero-pill-dot"></span>
+                <span>Kişisel izleme listesi</span>
+            </div>
+            <h1 class="hero-main-title">Film & Dizi Watchlist'in</h1>
+            <p class="hero-subtitle">
+                İzlediğin ve izlemeyi planladığın tüm filmleri ve dizileri tek bir yerde topla.
+                Sağdaki küçük kartlardan durumuna hızlıca bak.
+            </p>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-row">
+                <div class="stat-card">
+                    <div class="stat-label">Toplam kayıt</div>
+                    <div class="stat-value">@total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">İzlenen</div>
+                    <div class="stat-value stat-pill-success">@watched</div>
+                </div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-card">
+                    <div class="stat-label">İzlenecek</div>
+                    <div class="stat-value stat-pill-warn">@toWatch</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="content-panel">
+        @if (!Model.Any())
+        {
+            <div class="empty-state">
+                <p>Henüz watchlist’inde kayıt yok.</p>
+                <p class="mb-0">Üst menüden <strong>“+ Yeni Kayıt”</strong> butonuna tıklayıp ilk filmini ekleyebilirsin 🎬</p>
+            </div>
+        }
+        else
+        {
+            <div class="movie-grid">
+                @foreach (var movie in Model)
+                {
+                    <div class="movie-card @(movie.IsWatched ? "watched" : "not-watched")">
+                        <div class="movie-card-header">
+                            <h3 class="movie-title">@movie.Title</h3>
+                            @if (movie.IsWatched)
+                            {
+                                <span class="badge watched-badge">İzlendi</span>
+                            }
+                            else
+                            {
+                                <span class="badge notwatched-badge">İzlenecek</span>
+                            }
+                        </div>
+
+                        <div class="movie-card-body">
+                            <p class="movie-meta">
+                                <span class="movie-label">Tür</span>
+                                <span>@(string.IsNullOrWhiteSpace(movie.Genre) ? "-" : movie.Genre)</span>
+                            </p>
+
+                            <p class="movie-meta">
+                                <span class="movie-label">Yıl</span>
+                                <span>@(movie.ReleaseYear?.ToString() ?? "-")</span>
+                            </p>
+
+                            <p class="movie-meta">
+                                <span class="movie-label">Puan</span>
+                                <span>@(movie.Rating?.ToString() ?? "-") / 10</span>
+                            </p>
+                        </div>
+
+                        <div class="movie-card-footer">
+                            <a asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-sm btn-outline-light">
+                                Düzenle
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-sm btn-outline-danger">
+                                Sil
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </section>
+</div>
